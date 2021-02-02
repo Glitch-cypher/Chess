@@ -26,6 +26,8 @@ export default function Home() {
         <button
           onClick={() => {
             setBoard(new ChessBoard());
+            setPieceToMove();
+            setPotentialMoves([]);
             setPlayerTurn('White');
           }}>
           New Game

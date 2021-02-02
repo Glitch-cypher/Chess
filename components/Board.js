@@ -71,6 +71,7 @@ export default function Board({
                   }
                   setPieceToMove(undefined);
                   setPotentialMoves([]);
+
                   board.arrayOfSquares.forEach((square) => {
                     if (square.highlighted) {
                       square.setHighlight();
