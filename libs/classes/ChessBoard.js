@@ -1,4 +1,4 @@
-import createSquares from '../libs/functions/createSquares';
+import createSquares from '../functions/createSquares';
 
 export default class ChessBoard {
   constructor() {

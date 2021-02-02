@@ -1,10 +1,13 @@
 import Head from 'next/head';
 import { useState } from 'react';
 import styles from '../styles/Home.module.css';
-import ChessBoard from '../components/ChessBoard';
+import ChessBoard from '../libs/classes/ChessBoard';
+import Board from '../components/Board';
 export default function Home() {
   const [board, setBoard] = useState(new ChessBoard());
-  const [pieceToMove, SetpieceToMove] = useState();
+  const [pieceToMove, setPieceToMove] = useState();
+  const [playerTurn, setPlayerTurn] = useState('White');
+  const [potentialMoves, setPotentialMoves] = useState([]);
 
   return (
     <div className={styles.container}>
@@ -19,37 +22,28 @@ export default function Home() {
         <p className={styles.description}>
           Get started by clicking on the piece you want to move.
         </p>
-        <button>New Game</button>
-        <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            height: '410px',
-            width: '410px',
-            border: '5px solid brown',
+        <p>{playerTurn}'s turn to move</p>
+        <button
+          onClick={() => {
+            setBoard(new ChessBoard());
+            setPlayerTurn('White');
           }}>
-          {board.arrayOfSquares.map((square) => {
-            let p = square.chessPeiceContained;
-            let textColor = square.black ? 'white' : 'black';
-            let color = square.black ? 'black' : 'white';
-            return (
-              <div
-                key={`${square.gridValue[0]}${square.gridValue[1]} `}
-                onClick={() => {
-                  square.readyPiece(SetpieceToMove, pieceToMove);
-                }}
-                style={{
-                  height: '50px',
-                  width: '50px',
-                  position: 'relative',
-                  color: textColor,
-                  backgroundColor: color,
-                }}>
-                {p ? p.pieceType : null}
-              </div>
-            );
-          })}
-        </div>
+          New Game
+        </button>
+        {pieceToMove ? (
+          <h1>{pieceToMove.chessPieceContained.pieceType}</h1>
+        ) : (
+          <h1>no piece selected</h1>
+        )}
+        <Board
+          board={board}
+          playerTurn={playerTurn}
+          pieceToMove={pieceToMove}
+          setPlayerTurn={setPlayerTurn}
+          setPieceToMove={setPieceToMove}
+          potentialMoves={potentialMoves}
+          setPotentialMoves={setPotentialMoves}
+        />
       </main>
 
       <footer className={styles.footer}>
