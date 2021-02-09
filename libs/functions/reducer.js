@@ -5,7 +5,6 @@ const reducer = (accumulator, currentValue) => {
   let distance = square.chessPieceContained.movementDistance + 1;
   let curX = currentValue[0];
   let curY = currentValue[1];
-  console.log(curX);
   if (
     square.chessPieceContained.pieceType === 'Pawn' &&
     square.chessPieceContained.hasMoved === false &&
@@ -18,7 +17,6 @@ const reducer = (accumulator, currentValue) => {
     curY = curY * -1;
   }
   for (let i = 1; i < distance; i++) {
-    console.log(curX);
     let x = curX * i + square.gridValue[0];
     let y = curY * i + square.gridValue[1];
     if (x < 8 && x >= 0 && y < 8 && y >= 0) {
@@ -34,7 +32,6 @@ const reducer = (accumulator, currentValue) => {
         tile[0].chessPieceContained.color !== square.chessPieceContained.color
       ) {
         if (square.chessPieceContained.pieceType === 'Pawn' && curX === 0) {
-          console.log('pawn');
           return [...accumulator];
         }
         tempArray = [...tempArray, [x, y]];

@@ -6,14 +6,13 @@ export default function handleMove(
   potentialMoves,
   setPieceToMove
 ) {
+  // selects the square that you want to move the piece from that contains a piece.
   setPieceToMove(square);
-  let moves = square.chessPieceContained.possibleMoves.reduce(reducer, [
-    square,
-    board,
-  ]);
-  moves.shift();
-  moves.shift();
-  setPotentialMoves(moves);
+
+  // sets the state for all potential moves for the selected piece
+  setPotentialMoves(square.chessPieceContained.legalMoves);
+
+  // Checks which
   let tempArray = board.arrayOfSquares.filter((tile) => {
     return (
       potentialMoves.filter((coordinate) => {

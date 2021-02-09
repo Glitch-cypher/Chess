@@ -1,3 +1,5 @@
+import calculatePossibleMoves from '../functions/calculatePossibleMoves';
+import calculateCheck from '../functions/calculateCheck';
 export default class ChessSquare {
   constructor(black, chessPiece, gridValue) {
     this.black = black;
@@ -16,13 +18,15 @@ export default class ChessSquare {
   setPiece(piece = null) {
     this.chessPieceContained = piece;
   }
-  movePiece(pieceToMove, setPlayerTurn, playerTurn) {
+  movePiece(pieceToMove, setPlayerTurn, playerTurn, board) {
     let move = () => {
       let turn = playerTurn === 'White' ? 'Black' : 'White';
       setPlayerTurn(turn);
       this.chessPieceContained = pieceToMove.chessPieceContained;
       pieceToMove.setPiece();
       this.chessPieceContained.movePiece();
+      calculatePossibleMoves(board);
+      calculateCheck(board, playerTurn);
     };
     if (
       !this.chessPieceContained ||

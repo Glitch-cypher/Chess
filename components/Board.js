@@ -1,4 +1,6 @@
 import handleMove from '../libs/functions/handleMove';
+import React from 'react';
+import styles from '../styles/Board.module.css';
 export default function Board({
   board,
   pieceToMove,
@@ -23,14 +25,14 @@ export default function Board({
         display: 'flex',
         position: 'relative',
         flexWrap: 'wrap',
-        height: '410px',
-        width: '410px',
-        border: '5px solid brown',
+        height: '41vh',
+        width: '41vh',
+        border: '0.5vh solid black',
       }}>
       {board.arrayOfSquares.map((square) => {
         let p = square.chessPieceContained;
-        let textColor = square.black ? 'white' : 'black';
-        let color = square.black ? 'black' : 'white';
+        let color = square.black ? 'brown' : 'cream';
+
         return (
           <div
             key={`${square.gridValue[0]}${square.gridValue[1]} `}
@@ -38,20 +40,24 @@ export default function Board({
               square.readyPiece(handleClick, playerTurn);
             }}
             style={{
-              height: '50px',
-              width: '50px',
+              height: '5vh',
+              width: '5vh',
               position: 'relative',
-              color: textColor,
+              border: '0.1vh solid black',
               backgroundColor: color,
             }}>
-            {p ? `${p.color} ${p.pieceType}` : null}
+            {p ? (
+              <div className={p.selected ? 'highlight' : null}>
+                <p.image />
+              </div>
+            ) : null}
           </div>
         );
       })}
       {potentialMoves
         ? potentialMoves.map((coordinate) => {
-            let top = coordinate[1] * 50;
-            let left = coordinate[0] * 50;
+            let top = coordinate[1] * 5 + 0.1;
+            let left = coordinate[0] * 5 + 0.1;
             return (
               <div
                 key={`${top} ${left}`}
@@ -67,7 +73,12 @@ export default function Board({
                     square.gridValue !== pieceToMove.gridValue &&
                     pieceToMove !== undefined
                   ) {
-                    square.movePiece(pieceToMove, setPlayerTurn, playerTurn);
+                    square.movePiece(
+                      pieceToMove,
+                      setPlayerTurn,
+                      playerTurn,
+                      board
+                    );
                   }
                   setPieceToMove(undefined);
                   setPotentialMoves([]);
@@ -80,10 +91,10 @@ export default function Board({
                 }}
                 style={{
                   position: 'absolute',
-                  top: `${top}px`,
-                  left: `${left}px`,
-                  height: '50px',
-                  width: '50px',
+                  top: `${top}vh`,
+                  left: `${left}vh`,
+                  height: '4.8vh',
+                  width: '4.8vh',
                   opacity: '0.5',
                   borderRadius: '50%',
                   backgroundColor: 'yellow',
